@@ -20,14 +20,27 @@
  * @date April 1 2017
  *
  */
+#ifdef COURSE1
+
 #include "platform.h"
 #include "memory.h"
+#include "course1.h"
+#include "stats.h"
+int main()
+{
 
+ course1();
+ return 0;}
+#else
+
+#include "platform.h"
+#include "memory.h"
 #define MAX_LENGTH (10)
 char buffer[MAX_LENGTH];
 
 /* A pretty boring main file */
-int main(void) {
+int main(void)
+{
   unsigned int i;
   char value;
 
@@ -49,6 +62,9 @@ int main(void) {
     PRINTF("%c", buffer[i]);
   }
   PRINTF("\n");
-  return 0;
+
+return 0;
 }
+#endif
+
 

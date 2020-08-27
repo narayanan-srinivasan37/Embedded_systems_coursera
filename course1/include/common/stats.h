@@ -9,7 +9,7 @@
  *
  *****************************************************************************/
 /**
- * @file  Stats.h
+ * @file  stats.h
  * @brief This file contains the function declaration used in the file Stats.c
  *
  * This file contains the function declaration and their brief description.
@@ -42,7 +42,7 @@ void print_statistics(unsigned char *, int);
  * @param int variable that accepts the length of the array
  */
 
-void print_array(unsigned char *,int);
+void print_array (unsigned char *u,int q);
 
 /**
  * @brief Finds the maximum element in the array
@@ -102,9 +102,4 @@ unsigned char find_mean(unsigned char *,int);
  * @param int variable that accepts the length of the array
  */
 void sort_array(unsigned char *,int);
-
-
-
-
-
 #endif /* __STATS_H__ */

@@ -30,10 +30,24 @@ include sources.mk
 
 # Platform Overrides
 PLATFORM = 
-TARGET = c1m2
+COURSE = 
+
+ifeq ($(COURSE),COURSE1)
+TARGET = c1
+COU =-D$(COURSE)
+else
+TARGET = C1M2
+COU=
+endif
+ifeq ($(VERBOSE),VERBOSE)
+VER= -D$(VERBOSE)
+else
+VER=
+endif
+
 ifeq ($(PLATFORM),MSP432)
 # Architectures Specific Flags
-	LINKER_FILE = ../msp432p401r.lds
+	LINKER_FILE = msp432p401r.lds
 	CPU = cortex-m4
 	ARCH = armv7e-m
 	SPECS = nosys.specs
@@ -55,7 +69,7 @@ ifeq ($(PLATFORM),HOST)
 	LD=ld
 	LDFLAGS = -Wl,-Map=$(TARGET).map  $(LINKER_FILE)
 	CFLAGS = $(INCLUDES) -Wall -Werror -g -std=c99
-	SIZE = size -A
+	SIZE = size
 endif
 
 PP = $(SOURCES:.c=.i)
@@ -64,20 +78,20 @@ OBJS = $(SOURCES:.c=.o)
 DF = $(SOURCES:.c=.dep)
 
 %.i : %.c
-	$(CC) -E $< $(CFLAGS) -o $@ -D$(PLATFORM)
+	$(CC) -E $< $(CFLAGS) -o $@ -D$(PLATFORM) $(COU) $(VER)
 
 %.asm : %.c
-	$(CC) -S $< $(CFLAGS) -o $@ -D$(PLATFORM)
+	$(CC) -S $< $(CFLAGS) -o $@ -D$(PLATFORM) $(COU) $(VER)
 
 %.o : %.c
-	$(CC) -c $< $(CFLAGS) -o $@ -D$(PLATFORM)
+	$(CC) -c $< $(CFLAGS) -o $@ -D$(PLATFORM) $(COU) $(VER)
 
 %.dep : %.c
-	$(CC) -M $< $(CFLAGS) -o $@ -D$(PLATFORM)
+	$(CC) -M $< $(CFLAGS) -o $@ -D$(PLATFORM) $(COU)  $(VER)
 
 .PHONY: compile-all
 compile-all :	
-	$(CC) -c $(SOURCES) $(CFLAGS) -D$(PLATFORM)
+	$(CC) -c $(SOURCES) $(CFLAGS) -D$(PLATFORM) $(COU) $(VER)
 
 .PHONY: build
 build: all
@@ -86,10 +100,10 @@ build: all
 all : $(TARGET).out
 
 $(TARGET).out : $(OBJS) $(DF) $(AS) $(PP)
-	$(CC) $(OBJS) $(CFLAGS) $(LDFLAGS) -o $@
+	$(CC) $(OBJS) $(CFLAGS) $(LDFLAGS) -o $@ -D$(PLATFORM) $(COU) $(VER)
 	 $(SIZE) $@ $(OBJS)
 
 .PHONY : clean
 clean:
-	rm -f *.o *.asm *.i *dep $(TARGET).out $(TARGET).map *.out
+	rm -f src/*.o src/*.asm src/*.i src/*dep $(TARGET).out $(TARGET).map *.out *.map
 

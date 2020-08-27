@@ -23,23 +23,25 @@
 
 #include <stdio.h>
 #include "stats.h"
+#include "platform.h"
 
 /* Size of the Data Set */
 #define SIZE (40)
 
-void main() {
+#ifdef VERBOSE
+void print_array(unsigned char *u,int q)
+{
+for(int i=0;i<q;i++)
+ {
+  PRINTF("Array[%d]:%d \n",i,u[i]);
+ }
+}
+#endif
 
-  unsigned char test[SIZE] = { 34, 201, 190, 154,   8, 194,   2,   6,
-                              114, 88,   45,  76, 123,  87,  25,  23,
-                              200, 122, 150, 90,   92,  87, 177, 244,
-                              201,   6,  12,  60,   8,   2,   5,  67,
-                                7,  87, 250, 230,  99,   3, 100,  90};
-int length = SIZE;
-print_array(test,length);
-print_statistics(test,length);
+
  
 
-}
+/*
 void print_statistics (unsigned char *t,int l)
 {
 unsigned char data[SIZE];
@@ -55,18 +57,10 @@ printf("\n");
  mean= find_mean(data,l);
  median=find_median(data,l);
 
- printf("Maximum number in the array : %d \n",maximum);
- printf("Minimum number in the array : %d \n",minimum);
- printf("Mean in the array : %d \n",mean);
- printf("Median in the array : %d \n", median);
-}
-
-void print_array(unsigned char *u,int q)
-{
-for(int i=0;i<q;i++)
- {
-  printf("Array[%d]:%d \n",i,u[i]);
- }
+ PRINTF("Maximum number in the array : %d \n",maximum);
+ PRINTF("Minimum number in the array : %d \n",minimum);
+ PRINTF("Mean in the array : %d \n",mean);
+ PRINTF("Median in the array : %d \n", median);
 }
 
 unsigned char find_maximum(unsigned char *t, int l)
@@ -82,7 +76,7 @@ unsigned char find_maximum(unsigned char *t, int l)
  }
  return max;
 }
-
+*/
 unsigned char find_minimum(unsigned char *m, int e)
 {
  int min=m[0];

@@ -40,6 +40,7 @@ ifeq ($(PLATFORM),MSP432)
 # Compiler Flags and Defines
 	CC = arm-none-eabi-gcc
 	LD = arm-none-eabi-ld
+	SIZE = arm-none-eabi-size
 	LDFLAGS = -Wl,-Map=$(TARGET).map -T $(LINKER_FILE)
 	CMFLAGS = -Wall -Werror -g -O0 -std=c99 
 	CFLAGS = $(CMFLAGS) $(INCLUDES) -mcpu=$(CPU) -march=$(ARCH) --specs=$(SPECS) -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16
@@ -51,6 +52,7 @@ ifeq ($(PLATFORM),HOST)
 
 # Compiler Flags and Defines
 	CC = gcc
+	SIZE = size 
 	LD=ld
 	LDFLAGS = -Wl,-Map=$(TARGET).map  $(LINKER_FILE)
 	CFLAGS = $(INCLUDES) -Wall -Werror -g -std=c99
@@ -83,8 +85,9 @@ build: all
 .PHONY: all
 all : $(TARGET).out
 
-$(TARGET).out : $(OBJS)
+$(TARGET).out : $(OBJS) $(DF) $(AS) $(PP)
 	$(CC) $(OBJS) $(CFLAGS) $(LDFLAGS) -o $@
+	 $(SIZE) $@ $(OBJS)
 
 .PHONY : clean
 clean:

@@ -26,7 +26,7 @@
 
 int8_t test_data1() {
   uint8_t * ptr;
-  int32_t num = -4096;
+  int32_t num = -1000;
   uint32_t digits;
   int32_t value;
 
@@ -105,11 +105,13 @@ int8_t test_memmove1() {
   {
     set[i] = i;
   }
-
+  #ifdef VERBOSE
   print_array(set, MEM_SET_SIZE_B);
+  #endif
   my_memmove(ptra, ptrb, TEST_MEMMOVE_LENGTH);
+  #ifdef VERBOSE
   print_array(set, MEM_SET_SIZE_B);
-
+  #endif
   for (i = 0; i < TEST_MEMMOVE_LENGTH; i++)
   {
     if (set[i + 16] != i)
@@ -144,9 +146,13 @@ int8_t test_memmove2() {
     set[i] = i;
   }
 
+  #ifdef VERBOSE
   print_array(set, MEM_SET_SIZE_B);
+  #endif
   my_memmove(ptra, ptrb, TEST_MEMMOVE_LENGTH);
+  #ifdef VERBOSE
   print_array(set, MEM_SET_SIZE_B);
+  #endif
 
   for (i = 0; i < TEST_MEMMOVE_LENGTH; i++)
   {
@@ -183,9 +189,13 @@ int8_t test_memmove3() {
     set[i] = i;
   }
 
+  #ifdef VERBOSE
   print_array(set, MEM_SET_SIZE_B);
+  #endif
   my_memmove(ptra, ptrb, TEST_MEMMOVE_LENGTH);
+  #ifdef VERBOSE
   print_array(set, MEM_SET_SIZE_B);
+  #endif
 
   for (i = 0; i < TEST_MEMMOVE_LENGTH; i++)
   {
@@ -223,9 +233,13 @@ int8_t test_memcopy() {
     set[i] = i;
   }
 
+  #ifdef VERBOSE
   print_array(set, MEM_SET_SIZE_B);
+  #endif
   my_memcopy(ptra, ptrb, TEST_MEMMOVE_LENGTH);
+  #ifdef VERBOSE
   print_array(set, MEM_SET_SIZE_B);
+  #endif
 
   for (i = 0; i < TEST_MEMMOVE_LENGTH; i++)
   {
@@ -262,11 +276,17 @@ int8_t test_memset()
     set[i] = i;
   }
 
+  #ifdef VERBOSE
   print_array(set, MEM_SET_SIZE_B);
+  #endif
   my_memset(ptra, MEM_SET_SIZE_B, 0xFF);
+   #ifdef VERBOSE
   print_array(set, MEM_SET_SIZE_B);
+  #endif
   my_memzero(ptrb, MEM_ZERO_LENGTH);
+   #ifdef VERBOSE
   print_array(set, MEM_SET_SIZE_B);
+  #endif
   
   /* Validate Set & Zero Functionality */
   for (i = 0; i < MEM_ZERO_LENGTH; i++)
@@ -305,9 +325,13 @@ int8_t test_reverse()
   
   my_memcopy(set, copy, MEM_SET_SIZE_B);
 
+   #ifdef VERBOSE
   print_array(set, MEM_SET_SIZE_B);
+  #endif
   my_reverse(set, MEM_SET_SIZE_B);
+  #ifdef VERBOSE
   print_array(set, MEM_SET_SIZE_B);
+  #endif
 
   for (i = 0; i < MEM_SET_SIZE_B; i++)
   {
@@ -339,7 +363,7 @@ void course1(void)
   for ( i = 0; i < TESTCOUNT; i++) 
   {
     failed += results[i];
-  }
+     }
 
   PRINTF("--------------------------------\n");
   PRINTF("Test Results:\n");
